@@ -6,25 +6,28 @@
   <title>VocaQuiz - 영단어 4지선다 암기 퀴즈</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Inter & Pretendard -->
+  <!-- Google Fonts: Inter & Noto Sans KR -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
-      darkMode: 'class',
       theme: {
         extend: {
           fontFamily: {
             sans: ['Inter', 'Noto Sans KR', 'sans-serif'],
           },
           colors: {
-            brand: {
-              50: '#eef2ff',
-              100: '#e0e7ff',
-              500: '#6366f1',
-              600: '#4f46e5',
-              700: '#4338ca',
+            warmbg: '#faf8f5',
+            orange: {
+              50: '#fff7ed',
+              100: '#ffedd5',
+              200: '#fed7aa',
+              300: '#fdba74',
+              400: '#fb923c',
+              500: '#f97316',
+              600: '#ea580c',
+              700: '#c2410c',
             }
           },
           keyframes: {
@@ -33,7 +36,7 @@
               '50%': { height: '24px' },
             },
             popIn: {
-              '0%': { transform: 'scale(0.95)', opacity: '0' },
+              '0%': { transform: 'scale(0.96)', opacity: '0' },
               '100%': { transform: 'scale(1)', opacity: '1' },
             }
           },
@@ -48,50 +51,50 @@
     }
   </script>
   <style>
-    /* Custom scrollbar */
+    /* Warm minimal scrollbar */
     ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
+      width: 7px;
+      height: 7px;
     }
     ::-webkit-scrollbar-track {
-      background: #0f172a;
+      background: #faf8f5;
     }
     ::-webkit-scrollbar-thumb {
-      background: #334155;
+      background: #fed7aa;
       border-radius: 9999px;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: #475569;
+      background: #fb923c;
     }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-full flex flex-col font-sans selection:bg-indigo-500/30 selection:text-indigo-200 antialiased">
+<body class="bg-[#faf8f5] text-slate-800 min-h-full flex flex-col font-sans selection:bg-orange-100 selection:text-orange-900 antialiased">
 
   <!-- Top Navigation Header -->
-  <header class="border-b border-slate-800/80 bg-slate-900/60 backdrop-blur sticky top-0 z-40">
+  <header class="border-b border-orange-100/90 bg-white/80 backdrop-blur sticky top-0 z-40 shadow-sm shadow-orange-950/[0.02]">
     <div class="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-orange-500 to-amber-400 flex items-center justify-center shadow-lg shadow-orange-500/25">
           <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
           </svg>
         </div>
         <div>
-          <h1 class="text-lg font-bold tracking-tight text-white flex items-center gap-2">
-            VocaQuiz <span class="text-xs px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-medium">영단어 퀴즈</span>
+          <h1 class="text-lg font-bold tracking-tight text-slate-900 flex items-center gap-2">
+            VocaQuiz <span class="text-xs px-2.5 py-0.5 rounded-full bg-orange-100 text-orange-700 border border-orange-200/80 font-bold">영단어 퀴즈</span>
           </h1>
-          <p class="text-xs text-slate-400">발음 듣고 4지선다 뜻 맞히기</p>
+          <p class="text-xs text-slate-500">원어민 발음 듣고 4지선다 뜻 맞히기</p>
         </div>
       </div>
 
       <!-- Quick Controls / Audio status -->
       <div class="flex items-center gap-2">
-        <div id="ttsStatusBadge" class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-800/80 border border-slate-700/60 text-xs text-slate-300">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span id="voiceNameText" class="truncate max-w-[120px]">US Voice Ready</span>
+        <div id="ttsStatusBadge" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-orange-50 border border-orange-200/70 text-xs font-semibold text-orange-800">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span id="voiceNameText" class="truncate max-w-[130px]">US Voice Ready</span>
         </div>
-        <!-- TTS Volume/Speed Config Toggle -->
-        <button id="toggleSettingsBtn" title="오디오 설정" class="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition">
+        <!-- Settings Toggle -->
+        <button id="toggleSettingsBtn" title="오디오 및 진행 설정" class="p-2 rounded-xl text-slate-500 hover:text-orange-600 hover:bg-orange-50 border border-transparent hover:border-orange-200 transition">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -101,17 +104,17 @@
     </div>
   </header>
 
-  <!-- Settings Dropdown / Drawer -->
-  <div id="settingsPanel" class="hidden border-b border-slate-800 bg-slate-900/95 px-4 py-4 backdrop-blur transition-all">
+  <!-- Settings Dropdown Panel -->
+  <div id="settingsPanel" class="hidden border-b border-orange-100 bg-white/95 px-4 py-4 backdrop-blur shadow-sm transition-all">
     <div class="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-      <div>
-        <label class="block text-slate-400 mb-1.5 font-medium">발음 재생 속도: <span id="rateLabel" class="text-indigo-400 font-bold">1.0x</span></label>
-        <input id="rateRange" type="range" min="0.6" max="1.4" step="0.1" value="0.95" class="w-full accent-indigo-500 cursor-pointer">
+      <div class="bg-orange-50/50 p-3.5 rounded-2xl border border-orange-100">
+        <label class="block text-slate-700 mb-1.5 font-bold">발음 재생 속도: <span id="rateLabel" class="text-orange-600 font-extrabold">0.95x</span></label>
+        <input id="rateRange" type="range" min="0.6" max="1.4" step="0.05" value="0.95" class="w-full accent-orange-500 cursor-pointer">
         <p class="text-[11px] text-slate-500 mt-1">원어민 발음이 너무 빠르면 0.8x~0.9x로 낮춰보세요.</p>
       </div>
-      <div>
-        <label class="block text-slate-400 mb-1.5 font-medium">자동 문제 넘김 지연 시간: <span id="delayLabel" class="text-indigo-400 font-bold">1.0초</span></label>
-        <input id="delayRange" type="range" min="0.4" max="2.0" step="0.2" value="1.0" class="w-full accent-indigo-500 cursor-pointer">
+      <div class="bg-orange-50/50 p-3.5 rounded-2xl border border-orange-100">
+        <label class="block text-slate-700 mb-1.5 font-bold">자동 문제 넘김 지연 시간: <span id="delayLabel" class="text-orange-600 font-extrabold">1.0초</span></label>
+        <input id="delayRange" type="range" min="0.4" max="2.0" step="0.2" value="1.0" class="w-full accent-orange-500 cursor-pointer">
         <p class="text-[11px] text-slate-500 mt-1">정답/오답 확인 후 다음 문제로 넘어가는 대기 시간입니다.</p>
       </div>
     </div>
@@ -122,85 +125,83 @@
 
     <!-- ================= SCREEN 1: UPLOAD / START ================= -->
     <section id="screenUpload" class="flex flex-col gap-6">
-      <div class="text-center max-w-xl mx-auto space-y-2 mt-4 sm:mt-8">
-        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-xs font-semibold">
-          💡 텍스트 단어장 파일 업로드 지원
+      <div class="text-center max-w-xl mx-auto space-y-2 mt-4 sm:mt-6">
+        <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-orange-100 text-orange-700 border border-orange-200 text-xs font-bold shadow-sm">
+          ✨ 단어장 텍스트 파일(.txt) 완벽 지원
         </span>
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+        <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
           단어장을 등록하고 퀴즈를 시작하세요
         </h2>
-        <p class="text-slate-400 text-sm leading-relaxed">
-          한 줄에 <span class="text-indigo-300 font-mono">영단어,뜻</span> 또는 탭(<span class="text-indigo-300 font-mono">Tab</span>)으로 구분된 <code class="text-slate-300">.txt</code> 파일을 올리면 미국식 원어민 음성과 함께 4지선다 퀴즈가 생성됩니다.
+        <p class="text-slate-600 text-sm leading-relaxed">
+          한 줄에 <span class="text-orange-600 font-semibold font-mono bg-orange-50 px-1.5 py-0.5 rounded border border-orange-200">영단어,뜻</span> 또는 <span class="text-orange-600 font-semibold font-mono bg-orange-50 px-1.5 py-0.5 rounded border border-orange-200">Tab</span> 키로 구분된 텍스트 파일을 올리면 원어민 발음과 함께 4지선다 퀴즈가 시작됩니다.
         </p>
       </div>
 
       <!-- Drag & Drop Zone -->
-      <div id="dropZone" class="border-2 border-dashed border-slate-700 hover:border-indigo-500/80 bg-slate-900/50 hover:bg-slate-900/90 transition-all rounded-3xl p-8 sm:p-12 text-center cursor-pointer flex flex-col items-center justify-center gap-4 group shadow-xl">
+      <div id="dropZone" class="border-2 border-dashed border-orange-200 hover:border-orange-500 bg-white hover:bg-orange-50/40 transition-all rounded-3xl p-8 sm:p-12 text-center cursor-pointer flex flex-col items-center justify-center gap-4 group shadow-lg shadow-orange-950/5">
         <input type="file" id="fileInput" accept=".txt" class="hidden">
-        <div class="w-16 h-16 rounded-2xl bg-slate-800 group-hover:bg-indigo-600/20 group-hover:scale-110 text-indigo-400 flex items-center justify-center transition-all duration-300 border border-slate-700 group-hover:border-indigo-500/50">
+        <div class="w-16 h-16 rounded-2xl bg-orange-100 group-hover:bg-orange-500 group-hover:scale-105 text-orange-600 group-hover:text-white flex items-center justify-center transition-all duration-300 border border-orange-200 shadow-md shadow-orange-500/10">
           <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
           </svg>
         </div>
         <div>
-          <p class="text-base font-semibold text-white group-hover:text-indigo-300 transition">
+          <p class="text-base font-bold text-slate-800 group-hover:text-orange-600 transition">
             클릭하여 단어장(.txt) 파일 선택
           </p>
           <p class="text-xs text-slate-500 mt-1">
             또는 여기로 파일을 드래그 앤 드롭하세요 (최소 4단어 이상)
           </p>
         </div>
-        <div id="fileInfoBadge" class="hidden items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-medium">
+        <div id="fileInfoBadge" class="hidden items-center gap-2 px-3.5 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold shadow-sm">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
           </svg>
           <span id="fileNameDisplay">단어장.txt (30개 단어 로드됨)</span>
         </div>
       </div>
 
       <!-- Quick Action Buttons -->
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-        <button id="startLoadedBtn" disabled class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 disabled:opacity-40 disabled:hover:bg-indigo-600 text-white font-bold text-sm tracking-wide shadow-lg shadow-indigo-600/30 transition-all flex items-center justify-center gap-2">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5">
+        <button id="startLoadedBtn" disabled class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-orange-500 hover:bg-orange-600 disabled:opacity-40 disabled:hover:bg-orange-500 text-white font-extrabold text-sm tracking-wide shadow-lg shadow-orange-500/30 transition-all flex items-center justify-center gap-2 active:scale-95">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           선택한 단어로 퀴즈 시작하기
         </button>
 
-        <button id="useSampleBtn" class="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-slate-800 hover:bg-slate-700/80 text-slate-300 hover:text-white font-medium text-sm border border-slate-700 transition flex items-center justify-center gap-2">
-          <span>🚀 준비된 추천 단어장(20단어)으로 바로 체험하기</span>
+        <button id="useSampleBtn" class="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-white hover:bg-orange-50 text-slate-700 hover:text-orange-600 font-bold text-sm border border-orange-200/90 shadow-sm transition flex items-center justify-center gap-2 active:scale-95">
+          <span>🚀 기본 추천 단어장(20단어)으로 바로 시작하기</span>
         </button>
       </div>
 
-      <!-- File Format Guide Collapsible -->
-      <div class="mt-4 bg-slate-900/60 border border-slate-800 rounded-2xl p-5 text-xs text-slate-400 space-y-2">
-        <div class="flex items-center gap-2 font-semibold text-slate-300">
-          <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
+      <!-- File Format Guide Card -->
+      <div class="mt-2 bg-white border border-orange-100 rounded-2xl p-5 text-xs text-slate-600 space-y-2 shadow-sm">
+        <div class="flex items-center gap-2 font-bold text-slate-800">
+          <span class="w-2 h-2 rounded-full bg-orange-500"></span>
           단어장 텍스트(.txt) 작성 팁
         </div>
-        <p>• <code class="text-slate-200">abandon, 버리다, 포기하다</code> 처럼 쉼표나 탭(<code class="text-slate-200">\t</code>)으로 구분합니다.</p>
-        <p>• 한글 뜻 안에 쉼표가 들어있어도 첫 번째 구분자 뒤의 모든 내용은 온전하게 뜻으로 인식됩니다.</p>
-        <p>• 4지선다 출제를 위해 단어는 최소 4개 이상이어야 합니다.</p>
+        <p>• <code class="bg-orange-50 text-orange-700 font-mono px-1 py-0.5 rounded border border-orange-200">abandon, 버리다, 포기하다</code> 처럼 쉼표나 탭(<code class="bg-orange-50 text-orange-700 font-mono px-1 py-0.5 rounded border border-orange-200">\t</code>)으로 구분합니다.</p>
+        <p>• 한글 뜻 안에 쉼표가 여러 개 들어있어도 첫 번째 구분자 뒤의 모든 내용은 잘리지 않고 뜻으로 인식됩니다.</p>
+        <p>• 4지선다 출제를 위해 단어장에 최소 4개 이상의 단어가 들어있어야 합니다.</p>
       </div>
     </section>
 
     <!-- ================= SCREEN 2: QUIZ IN PROGRESS ================= -->
-    <section id="screenQuiz" class="hidden flex-col gap-6">
+    <section id="screenQuiz" class="hidden flex-col gap-5">
       <!-- Status Top Bar: Progress & Stats -->
-      <div class="bg-slate-900/80 border border-slate-800/80 rounded-2xl p-4 sm:p-5 shadow-lg backdrop-blur space-y-3">
+      <div class="bg-white border border-orange-100/90 rounded-2xl p-4 sm:p-5 shadow-sm shadow-orange-950/5 space-y-3">
         <div class="flex items-center justify-between text-xs sm:text-sm">
           <div class="flex items-center gap-3">
-            <span class="px-2.5 py-1 rounded-lg bg-indigo-500/20 text-indigo-300 font-bold font-mono">
+            <span class="px-3 py-1 rounded-xl bg-orange-100 text-orange-700 font-extrabold font-mono border border-orange-200">
               Q <span id="currentQNum">1</span> / <span id="totalQNum">20</span>
             </span>
-            <span class="text-slate-400">정답: <strong id="correctScore" class="text-emerald-400">0</strong></span>
-            <span class="text-slate-400">오답: <strong id="wrongScore" class="text-rose-400">0</strong></span>
+            <span class="text-slate-600 font-medium">정답: <strong id="correctScore" class="text-emerald-600 font-bold">0</strong></span>
+            <span class="text-slate-600 font-medium">오답: <strong id="wrongScore" class="text-rose-500 font-bold">0</strong></span>
           </div>
 
-          <button id="earlyStopBtn" class="text-xs text-slate-400 hover:text-rose-400 flex items-center gap-1 py-1 px-2.5 rounded-lg hover:bg-slate-800 transition">
+          <button id="earlyStopBtn" class="text-xs text-slate-500 hover:text-rose-600 flex items-center gap-1 py-1 px-2.5 rounded-lg hover:bg-rose-50 border border-transparent hover:border-rose-200 transition font-medium">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -209,144 +210,144 @@
         </div>
 
         <!-- Progress Bar -->
-        <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-          <div id="progressBar" class="bg-gradient-to-r from-indigo-500 to-violet-500 h-full w-0 transition-all duration-300 ease-out"></div>
+        <div class="w-full bg-orange-100/60 h-2.5 rounded-full overflow-hidden p-0.5">
+          <div id="progressBar" class="bg-gradient-to-r from-orange-400 to-orange-500 h-full w-0 rounded-full transition-all duration-300 ease-out shadow-sm shadow-orange-500/20"></div>
         </div>
       </div>
 
-      <!-- Question Card -->
-      <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden flex flex-col items-center text-center animate-popIn">
-        <!-- Audio waves decoration -->
-        <div id="audioWaveBox" class="flex items-center justify-center gap-1 h-6 mb-2 opacity-0 transition-opacity duration-200">
-          <span class="w-1 bg-indigo-400 rounded-full animate-soundWave1"></span>
-          <span class="w-1 bg-indigo-400 rounded-full animate-soundWave2"></span>
-          <span class="w-1 bg-indigo-400 rounded-full animate-soundWave3"></span>
-          <span class="w-1 bg-indigo-400 rounded-full animate-soundWave1"></span>
+      <!-- Question Big Card -->
+      <div class="bg-white border border-orange-100 rounded-3xl p-6 sm:p-10 shadow-xl shadow-orange-950/5 relative overflow-hidden flex flex-col items-center text-center animate-popIn">
+        <!-- Audio Waves Animation -->
+        <div id="audioWaveBox" class="flex items-center justify-center gap-1.5 h-6 mb-2 opacity-0 transition-opacity duration-200">
+          <span class="w-1.5 bg-orange-500 rounded-full animate-soundWave1"></span>
+          <span class="w-1.5 bg-orange-500 rounded-full animate-soundWave2"></span>
+          <span class="w-1.5 bg-orange-500 rounded-full animate-soundWave3"></span>
+          <span class="w-1.5 bg-orange-500 rounded-full animate-soundWave1"></span>
         </div>
 
-        <span class="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-1">English Word</span>
+        <span class="text-xs font-bold text-orange-500 uppercase tracking-widest mb-1">ENGLISH WORD</span>
         
         <!-- Big English Word -->
-        <h2 id="questionEngWord" class="text-3xl sm:text-5xl font-black text-white tracking-tight mb-4 drop-shadow-sm select-all">
+        <h2 id="questionEngWord" class="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight mb-4 select-all drop-shadow-sm">
           abandon
         </h2>
 
         <!-- Replay Voice Button -->
-        <button id="replayVoiceBtn" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800 hover:bg-indigo-600/20 text-indigo-300 hover:text-indigo-200 border border-slate-700 hover:border-indigo-500/40 text-xs font-medium transition active:scale-95 shadow-sm">
-          <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+        <button id="replayVoiceBtn" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-50 hover:bg-orange-100 text-orange-700 border border-orange-200 text-xs font-bold transition active:scale-95 shadow-sm">
+          <svg class="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
           </svg>
-          발음 다시 듣기 <span class="bg-slate-700 px-1.5 py-0.5 rounded text-[10px] text-slate-300">Space / 0</span>
+          발음 다시 듣기 <span class="bg-white px-2 py-0.5 rounded-full text-[10px] text-orange-800 border border-orange-200/70 font-mono">Space / 0</span>
         </button>
       </div>
 
       <!-- 4 Multiple Choice Options Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4" id="optionsContainer">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5" id="optionsContainer">
         <!-- Option 1 -->
-        <button data-opt-idx="0" class="option-btn group relative p-4 sm:p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-800/80 transition-all text-left flex items-center justify-between active:scale-[0.99] shadow-md">
+        <button data-opt-idx="0" class="option-btn group relative p-4 sm:p-5 rounded-2xl bg-white border border-orange-100/90 hover:border-orange-400 hover:bg-orange-50/50 transition-all text-left flex items-center justify-between active:scale-[0.99] shadow-sm hover:shadow-md cursor-pointer">
           <div class="flex items-center gap-3.5 pr-2">
-            <span class="w-8 h-8 rounded-xl bg-slate-800 group-hover:bg-indigo-600/30 text-slate-300 group-hover:text-indigo-300 font-bold text-sm flex items-center justify-center border border-slate-700 transition">1</span>
-            <span class="option-text text-sm sm:text-base font-semibold text-slate-200">버리다, 포기하다</span>
+            <span class="w-9 h-9 rounded-xl bg-orange-50 group-hover:bg-orange-500 text-orange-700 group-hover:text-white font-black text-sm flex items-center justify-center border border-orange-200 group-hover:border-transparent transition">1</span>
+            <span class="option-text text-sm sm:text-base font-bold text-slate-800">버리다, 포기하다</span>
           </div>
           <div class="result-icon opacity-0 transition-opacity"></div>
         </button>
 
         <!-- Option 2 -->
-        <button data-opt-idx="1" class="option-btn group relative p-4 sm:p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-800/80 transition-all text-left flex items-center justify-between active:scale-[0.99] shadow-md">
+        <button data-opt-idx="1" class="option-btn group relative p-4 sm:p-5 rounded-2xl bg-white border border-orange-100/90 hover:border-orange-400 hover:bg-orange-50/50 transition-all text-left flex items-center justify-between active:scale-[0.99] shadow-sm hover:shadow-md cursor-pointer">
           <div class="flex items-center gap-3.5 pr-2">
-            <span class="w-8 h-8 rounded-xl bg-slate-800 group-hover:bg-indigo-600/30 text-slate-300 group-hover:text-indigo-300 font-bold text-sm flex items-center justify-center border border-slate-700 transition">2</span>
-            <span class="option-text text-sm sm:text-base font-semibold text-slate-200">이익, 혜택</span>
+            <span class="w-9 h-9 rounded-xl bg-orange-50 group-hover:bg-orange-500 text-orange-700 group-hover:text-white font-black text-sm flex items-center justify-center border border-orange-200 group-hover:border-transparent transition">2</span>
+            <span class="option-text text-sm sm:text-base font-bold text-slate-800">이익, 혜택</span>
           </div>
           <div class="result-icon opacity-0 transition-opacity"></div>
         </button>
 
         <!-- Option 3 -->
-        <button data-opt-idx="2" class="option-btn group relative p-4 sm:p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-800/80 transition-all text-left flex items-center justify-between active:scale-[0.99] shadow-md">
+        <button data-opt-idx="2" class="option-btn group relative p-4 sm:p-5 rounded-2xl bg-white border border-orange-100/90 hover:border-orange-400 hover:bg-orange-50/50 transition-all text-left flex items-center justify-between active:scale-[0.99] shadow-sm hover:shadow-md cursor-pointer">
           <div class="flex items-center gap-3.5 pr-2">
-            <span class="w-8 h-8 rounded-xl bg-slate-800 group-hover:bg-indigo-600/30 text-slate-300 group-hover:text-indigo-300 font-bold text-sm flex items-center justify-center border border-slate-700 transition">3</span>
-            <span class="option-text text-sm sm:text-base font-semibold text-slate-200">정확한, 정밀한</span>
+            <span class="w-9 h-9 rounded-xl bg-orange-50 group-hover:bg-orange-500 text-orange-700 group-hover:text-white font-black text-sm flex items-center justify-center border border-orange-200 group-hover:border-transparent transition">3</span>
+            <span class="option-text text-sm sm:text-base font-bold text-slate-800">정확한, 정밀한</span>
           </div>
           <div class="result-icon opacity-0 transition-opacity"></div>
         </button>
 
         <!-- Option 4 -->
-        <button data-opt-idx="3" class="option-btn group relative p-4 sm:p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-800/80 transition-all text-left flex items-center justify-between active:scale-[0.99] shadow-md">
+        <button data-opt-idx="3" class="option-btn group relative p-4 sm:p-5 rounded-2xl bg-white border border-orange-100/90 hover:border-orange-400 hover:bg-orange-50/50 transition-all text-left flex items-center justify-between active:scale-[0.99] shadow-sm hover:shadow-md cursor-pointer">
           <div class="flex items-center gap-3.5 pr-2">
-            <span class="w-8 h-8 rounded-xl bg-slate-800 group-hover:bg-indigo-600/30 text-slate-300 group-hover:text-indigo-300 font-bold text-sm flex items-center justify-center border border-slate-700 transition">4</span>
-            <span class="option-text text-sm sm:text-base font-semibold text-slate-200">생성하다, 만들어내다</span>
+            <span class="w-9 h-9 rounded-xl bg-orange-50 group-hover:bg-orange-500 text-orange-700 group-hover:text-white font-black text-sm flex items-center justify-center border border-orange-200 group-hover:border-transparent transition">4</span>
+            <span class="option-text text-sm sm:text-base font-bold text-slate-800">생성하다, 만들어내다</span>
           </div>
           <div class="result-icon opacity-0 transition-opacity"></div>
         </button>
       </div>
 
       <!-- Keyboard shortcuts tip -->
-      <div class="text-center text-xs text-slate-500">
-        키보드 <kbd class="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300">1</kbd> ~ <kbd class="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300">4</kbd> 번 키로 정답을 선택할 수 있습니다.
+      <div class="text-center text-xs text-slate-500 font-medium">
+        키보드 <kbd class="px-2 py-0.5 rounded-md bg-white border border-orange-200 text-slate-700 shadow-sm font-bold">1</kbd> ~ <kbd class="px-2 py-0.5 rounded-md bg-white border border-orange-200 text-slate-700 shadow-sm font-bold">4</kbd> 번 키로 정답을 바로 선택할 수 있습니다.
       </div>
     </section>
 
     <!-- ================= SCREEN 3: RESULT & WRONG ANSWERS ================= -->
     <section id="screenResult" class="hidden flex-col gap-6">
       <!-- Score Banner -->
-      <div class="bg-gradient-to-b from-slate-900 to-slate-900/60 border border-slate-800 rounded-3xl p-6 sm:p-8 text-center relative overflow-hidden shadow-2xl space-y-4">
-        <div class="inline-flex p-3 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 mb-1">
+      <div class="bg-white border border-orange-100 rounded-3xl p-6 sm:p-8 text-center relative overflow-hidden shadow-xl shadow-orange-950/5 space-y-4">
+        <div class="inline-flex p-3.5 rounded-2xl bg-orange-100 text-orange-600 mb-1 border border-orange-200/80 shadow-sm">
           <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
           </svg>
         </div>
 
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">퀴즈가 완료되었습니다!</h2>
-        <p id="resultEncouragement" class="text-slate-400 text-sm">수고하셨습니다. 학습 결과를 확인해보세요.</p>
+        <h2 class="text-2xl sm:text-3xl font-black text-slate-900">퀴즈가 완료되었습니다!</h2>
+        <p id="resultEncouragement" class="text-slate-600 text-sm font-medium">수고하셨습니다. 학습 결과를 확인해보세요.</p>
 
-        <!-- Big stats numbers -->
-        <div class="grid grid-cols-3 gap-2 max-w-md mx-auto pt-2">
-          <div class="bg-slate-800/60 rounded-2xl p-3 border border-slate-700/60">
-            <p class="text-xs text-slate-400">푼 문제</p>
-            <p id="statTotal" class="text-xl sm:text-2xl font-black text-white mt-1">20</p>
+        <!-- Stats Boxes -->
+        <div class="grid grid-cols-3 gap-2.5 max-w-md mx-auto pt-2">
+          <div class="bg-orange-50/60 rounded-2xl p-3.5 border border-orange-100">
+            <p class="text-xs text-slate-600 font-semibold">푼 문제</p>
+            <p id="statTotal" class="text-xl sm:text-2xl font-black text-slate-900 mt-0.5">20</p>
           </div>
-          <div class="bg-emerald-950/30 rounded-2xl p-3 border border-emerald-800/40">
-            <p class="text-xs text-emerald-400">정답</p>
-            <p id="statCorrect" class="text-xl sm:text-2xl font-black text-emerald-300 mt-1">16</p>
+          <div class="bg-emerald-50 rounded-2xl p-3.5 border border-emerald-200">
+            <p class="text-xs text-emerald-700 font-semibold">정답</p>
+            <p id="statCorrect" class="text-xl sm:text-2xl font-black text-emerald-700 mt-0.5">16</p>
           </div>
-          <div class="bg-rose-950/30 rounded-2xl p-3 border border-rose-800/40">
-            <p class="text-xs text-rose-400">오답</p>
-            <p id="statWrong" class="text-xl sm:text-2xl font-black text-rose-300 mt-1">4</p>
+          <div class="bg-rose-50 rounded-2xl p-3.5 border border-rose-200">
+            <p class="text-xs text-rose-700 font-semibold">오답</p>
+            <p id="statWrong" class="text-xl sm:text-2xl font-black text-rose-700 mt-0.5">4</p>
           </div>
         </div>
 
         <!-- Action Buttons -->
         <div class="flex flex-wrap items-center justify-center gap-3 pt-3">
-          <button id="retryWrongOnlyBtn" class="px-6 py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-sm tracking-wide shadow-lg shadow-rose-600/30 transition flex items-center gap-2">
+          <button id="retryWrongOnlyBtn" class="px-6 py-3.5 rounded-2xl bg-rose-500 hover:bg-rose-600 text-white font-extrabold text-sm tracking-wide shadow-lg shadow-rose-500/20 transition flex items-center gap-2 active:scale-95">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
             </svg>
             틀린 단어만 다시 풀기 (<span id="wrongRetryCount">0</span>개)
           </button>
 
-          <button id="restartAllBtn" class="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm tracking-wide shadow-lg shadow-indigo-600/30 transition flex items-center gap-2">
+          <button id="restartAllBtn" class="px-6 py-3.5 rounded-2xl bg-orange-500 hover:bg-orange-600 text-white font-extrabold text-sm tracking-wide shadow-lg shadow-orange-500/25 transition flex items-center gap-2 active:scale-95">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9" />
             </svg>
             전체 처음부터 다시 풀기
           </button>
 
-          <button id="goToUploadBtn" class="px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium text-sm border border-slate-700 transition">
+          <button id="goToUploadBtn" class="px-5 py-3.5 rounded-2xl bg-white hover:bg-orange-50 text-slate-700 hover:text-orange-600 font-bold text-sm border border-orange-200 transition active:scale-95">
             새 단어장 업로드
           </button>
         </div>
       </div>
 
-      <!-- Wrong Answer Review Section (오답 노트) -->
-      <div id="wrongReviewSection" class="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-4">
-        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+      <!-- Wrong Answer Review Notebook -->
+      <div id="wrongReviewSection" class="bg-white border border-orange-100 rounded-3xl p-6 sm:p-8 shadow-xl shadow-orange-950/5 space-y-4">
+        <div class="flex items-center justify-between border-b border-orange-100 pb-4">
           <div class="flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
-            <h3 class="text-lg font-bold text-white">오답 노트 (복습하기)</h3>
+            <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+            <h3 class="text-lg font-black text-slate-900">오답 노트 (복습하기)</h3>
           </div>
-          <span class="text-xs text-slate-400">단어 옆 스피커를 누르면 원어민 발음이 재생됩니다</span>
+          <span class="text-xs text-slate-500 font-medium">스피커 아이콘을 누르면 발음이 재생됩니다</span>
         </div>
 
-        <div id="wrongWordsList" class="divide-y divide-slate-800/80 max-h-96 overflow-y-auto pr-1">
+        <div id="wrongWordsList" class="divide-y divide-orange-100/70 max-h-96 overflow-y-auto pr-1">
           <!-- Dynamically populated wrong items -->
         </div>
       </div>
@@ -355,9 +356,9 @@
   </main>
 
   <!-- Notification Toast Modal -->
-  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-3 px-4 py-3 rounded-2xl bg-slate-900 border border-slate-700 text-slate-100 shadow-2xl text-xs sm:text-sm">
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-3 px-4 py-3 rounded-2xl bg-slate-900 text-white shadow-2xl text-xs sm:text-sm">
     <div id="toastIcon"></div>
-    <span id="toastMsg">알림 메시지</span>
+    <span id="toastMsg" class="font-medium">알림 메시지</span>
   </div>
 
   <!-- Application Logic -->
@@ -387,17 +388,17 @@
     ];
 
     // App State
-    let currentWordBank = [...SAMPLE_WORDS]; // Current active word bank
-    let quizQuestions = [];                 // Randomized quiz question queue
+    let currentWordBank = [...SAMPLE_WORDS];
+    let quizQuestions = [];
     let currentQIndex = 0;
     let scoreCount = 0;
-    let wrongWords = [];                    // Stored wrong answers for review
-    let isAnsweringLocked = false;          // Prevents double taps during feedback
+    let wrongWords = [];
+    let isAnsweringLocked = false;
     let autoAdvanceTimer = null;
 
     // Settings
     let speechRate = 0.95;
-    let autoAdvanceDelay = 1000;            // ms
+    let autoAdvanceDelay = 1000;
     let nativeVoice = null;
 
     // DOM Elements
@@ -460,10 +461,6 @@
         const voices = window.speechSynthesis.getVoices();
         if (!voices || voices.length === 0) return;
 
-        // Find best US English voice:
-        // Priority 1: en-US Google or Microsoft natural voice
-        // Priority 2: any en-US
-        // Priority 3: any voice starting with 'en'
         const usVoice = voices.find(v => v.lang === 'en-US' && (v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('David') || v.name.includes('Zira')))
                      || voices.find(v => v.lang === 'en-US')
                      || voices.find(v => v.lang.startsWith('en'));
@@ -480,11 +477,9 @@
       }
     }
 
-    // Play native US English pronunciation
     function speakWord(text) {
       if (!('speechSynthesis' in window) || !text) return;
 
-      // Cancel previous pending utterances
       window.speechSynthesis.cancel();
 
       const utterance = new SpeechSynthesisUtterance(text);
@@ -494,7 +489,6 @@
         utterance.voice = nativeVoice;
       }
 
-      // Visual audio wave effect
       utterance.onstart = () => {
         audioWaveBox.classList.remove('opacity-0');
         audioWaveBox.classList.add('opacity-100');
@@ -515,7 +509,6 @@
        2. File Parsing & Upload Handling
        ========================================================= */
     function parseVocabularyText(text) {
-      // Remove UTF-8 BOM if present
       let cleanText = text.replace(/^\uFEFF/, '');
       const lines = cleanText.split(/\r?\n/);
       const parsed = [];
@@ -524,7 +517,6 @@
         let line = rawLine.trim();
         if (!line) continue;
 
-        // Split at first comma or tab, keeping all subsequent commas in the meaning intact
         const delimIndex = line.search(/,|\t/);
         if (delimIndex !== -1) {
           const eng = line.slice(0, delimIndex).trim();
@@ -568,7 +560,6 @@
       reader.readAsText(file, 'UTF-8');
     }
 
-    // Drag and drop events
     dropZone.addEventListener('click', () => fileInput.click());
     fileInput.addEventListener('change', (e) => {
       if (e.target.files && e.target.files[0]) {
@@ -579,14 +570,14 @@
     ['dragenter', 'dragover'].forEach(eventName => {
       dropZone.addEventListener(eventName, (e) => {
         e.preventDefault();
-        dropZone.classList.add('border-indigo-500', 'bg-indigo-950/20');
+        dropZone.classList.add('border-orange-500', 'bg-orange-50/70');
       });
     });
 
     ['dragleave', 'drop'].forEach(eventName => {
       dropZone.addEventListener(eventName, (e) => {
         e.preventDefault();
-        dropZone.classList.remove('border-indigo-500', 'bg-indigo-950/20');
+        dropZone.classList.remove('border-orange-500', 'bg-orange-50/70');
       });
     });
 
@@ -609,19 +600,16 @@
     }
 
     function buildQuizQueue(words) {
-      // 1. Shuffle all words so every word is presented once
       const shuffledWords = shuffleArray(words);
       const queue = [];
 
       for (let i = 0; i < shuffledWords.length; i++) {
         const target = shuffledWords[i];
 
-        // 2. Pick 3 distinct wrong choices from the rest of the pool
         const otherWords = words.filter(w => w.eng !== target.eng);
         const shuffledOthers = shuffleArray(otherWords);
         const distractors = shuffledOthers.slice(0, 3);
 
-        // 3. Assemble 4 options and shuffle them
         const rawOptions = [
           { kor: target.kor, isCorrect: true },
           ...distractors.map(d => ({ kor: d.kor, isCorrect: false }))
@@ -653,14 +641,11 @@
       correctScore.textContent = '0';
       wrongScore.textContent = '0';
 
-      // Switch screens
       screenUpload.classList.add('hidden');
       screenResult.classList.add('hidden');
       screenQuiz.classList.remove('hidden');
 
-      // Pre-warm speech audio context on user gesture
       speakWord('');
-
       renderQuestion();
     }
 
@@ -673,32 +658,28 @@
       isAnsweringLocked = false;
       const q = quizQuestions[currentQIndex];
 
-      // Update counters & progress
       currentQNum.textContent = currentQIndex + 1;
       const progressPercent = ((currentQIndex) / quizQuestions.length) * 100;
       progressBar.style.width = `${progressPercent}%`;
 
-      // Word display
       questionEngWord.textContent = q.targetWord.eng;
 
-      // Reset option styles
       optionButtons.forEach((btn, idx) => {
         btn.disabled = false;
-        btn.className = 'option-btn group relative p-4 sm:p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-800/80 transition-all text-left flex items-center justify-between active:scale-[0.99] shadow-md cursor-pointer';
+        btn.className = 'option-btn group relative p-4 sm:p-5 rounded-2xl bg-white border border-orange-100/90 hover:border-orange-400 hover:bg-orange-50/50 transition-all text-left flex items-center justify-between active:scale-[0.99] shadow-sm hover:shadow-md cursor-pointer';
 
         const numBadge = btn.querySelector('span:first-child');
-        numBadge.className = 'w-8 h-8 rounded-xl bg-slate-800 group-hover:bg-indigo-600/30 text-slate-300 group-hover:text-indigo-300 font-bold text-sm flex items-center justify-center border border-slate-700 transition';
+        numBadge.className = 'w-9 h-9 rounded-xl bg-orange-50 group-hover:bg-orange-500 text-orange-700 group-hover:text-white font-black text-sm flex items-center justify-center border border-orange-200 group-hover:border-transparent transition';
 
         const optText = btn.querySelector('.option-text');
         optText.textContent = q.options[idx].kor;
-        optText.className = 'option-text text-sm sm:text-base font-semibold text-slate-200';
+        optText.className = 'option-text text-sm sm:text-base font-bold text-slate-800';
 
         const iconBox = btn.querySelector('.result-icon');
         iconBox.innerHTML = '';
         iconBox.classList.add('opacity-0');
       });
 
-      // Play native US English pronunciation immediately as the question appears
       speakWord(q.targetWord.eng);
     }
 
@@ -710,16 +691,13 @@
       const selectedOption = q.options[selectedIndex];
       const selectedBtn = optionButtons[selectedIndex];
 
-      // Disable buttons to lock state
       optionButtons.forEach(btn => btn.disabled = true);
 
       if (selectedOption.isCorrect) {
-        // Correct answer selected
         scoreCount++;
         correctScore.textContent = scoreCount;
         applyOptionFeedback(selectedBtn, true);
       } else {
-        // Wrong answer selected: track for wrong answer review
         wrongWords.push({
           target: q.targetWord,
           chosenKor: selectedOption.kor
@@ -727,14 +705,12 @@
         wrongScore.textContent = wrongWords.length;
         applyOptionFeedback(selectedBtn, false);
 
-        // Highlight the true correct answer
         const correctIdx = q.options.findIndex(opt => opt.isCorrect);
         if (correctIdx !== -1) {
           applyOptionFeedback(optionButtons[correctIdx], true, true);
         }
       }
 
-      // Automatically advance after delay
       clearTimeout(autoAdvanceTimer);
       autoAdvanceTimer = setTimeout(() => {
         currentQIndex++;
@@ -748,21 +724,21 @@
       const iconBox = btn.querySelector('.result-icon');
 
       if (isCorrect) {
-        btn.className = `option-btn group relative p-4 sm:p-5 rounded-2xl bg-emerald-950/40 border-2 border-emerald-500 text-left flex items-center justify-between shadow-lg shadow-emerald-500/10 ${isRevealed ? 'animate-pulse' : ''}`;
-        numBadge.className = 'w-8 h-8 rounded-xl bg-emerald-600 text-white font-bold text-sm flex items-center justify-center';
-        optText.className = 'option-text text-sm sm:text-base font-bold text-emerald-200';
+        btn.className = `option-btn group relative p-4 sm:p-5 rounded-2xl bg-emerald-50 border-2 border-emerald-500 text-left flex items-center justify-between shadow-md shadow-emerald-500/10 ${isRevealed ? 'animate-pulse' : ''}`;
+        numBadge.className = 'w-9 h-9 rounded-xl bg-emerald-600 text-white font-black text-sm flex items-center justify-center';
+        optText.className = 'option-text text-sm sm:text-base font-extrabold text-emerald-900';
         iconBox.innerHTML = `
-          <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
           </svg>
         `;
         iconBox.classList.remove('opacity-0');
       } else {
-        btn.className = 'option-btn group relative p-4 sm:p-5 rounded-2xl bg-rose-950/40 border-2 border-rose-500 text-left flex items-center justify-between shadow-lg shadow-rose-500/10';
-        numBadge.className = 'w-8 h-8 rounded-xl bg-rose-600 text-white font-bold text-sm flex items-center justify-center';
-        optText.className = 'option-text text-sm sm:text-base font-bold text-rose-200';
+        btn.className = 'option-btn group relative p-4 sm:p-5 rounded-2xl bg-rose-50 border-2 border-rose-500 text-left flex items-center justify-between shadow-md shadow-rose-500/10';
+        numBadge.className = 'w-9 h-9 rounded-xl bg-rose-600 text-white font-black text-sm flex items-center justify-center';
+        optText.className = 'option-text text-sm sm:text-base font-extrabold text-rose-900';
         iconBox.innerHTML = `
-          <svg class="w-6 h-6 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-6 h-6 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
           </svg>
         `;
@@ -787,18 +763,16 @@
       statCorrect.textContent = correct;
       statWrong.textContent = wrong;
 
-      // Encouragement message
       if (percent === 100 && totalAttempted > 0) {
         resultEncouragement.textContent = '🎉 완벽합니다! 모든 단어를 정확하게 맞히셨습니다!';
       } else if (percent >= 80) {
-        resultEncouragement.textContent = '👏 대단해요! 거의 모든 단어를 마스터하셨습니다.';
+        resultEncouragement.textContent = '👏 대단해요! 대부분의 단어를 마스터하셨습니다.';
       } else if (percent >= 60) {
         resultEncouragement.textContent = '👍 좋은 성적입니다! 틀린 단어를 오답 노트로 복습해보세요.';
       } else {
         resultEncouragement.textContent = '💪 반복이 실력의 열쇠입니다. 오답 노트를 듣고 다시 도전해보세요!';
       }
 
-      // Retry wrong only button state
       wrongRetryCount.textContent = wrong;
       if (wrong === 0) {
         retryWrongOnlyBtn.classList.add('hidden');
@@ -815,21 +789,21 @@
 
       wrongWords.forEach((item, index) => {
         const row = document.createElement('div');
-        row.className = 'py-3.5 flex items-center justify-between gap-4 group hover:bg-slate-800/40 px-2 rounded-xl transition';
+        row.className = 'py-3.5 flex items-center justify-between gap-4 group hover:bg-orange-50/50 px-2 rounded-2xl transition';
 
         row.innerHTML = `
-          <div class="flex items-center gap-3 min-w-0">
-            <span class="text-xs font-mono font-bold text-slate-500 w-6">${index + 1}.</span>
+          <div class="flex items-center gap-3.5 min-w-0">
+            <span class="text-xs font-mono font-bold text-orange-600 bg-orange-100 px-2 py-1 rounded-lg">${index + 1}</span>
             <div class="min-w-0">
-              <div class="text-base font-bold text-white tracking-wide flex items-center gap-2">
+              <div class="text-base font-extrabold text-slate-900 tracking-wide flex items-center gap-2">
                 ${item.target.eng}
               </div>
-              <p class="text-xs text-indigo-300 truncate mt-0.5">${item.target.kor}</p>
+              <p class="text-xs text-orange-700 font-semibold truncate mt-0.5">${item.target.kor}</p>
             </div>
           </div>
-          <button class="speak-review-btn flex-shrink-0 p-2.5 rounded-xl bg-slate-800 hover:bg-indigo-600 text-slate-300 hover:text-white transition active:scale-95 border border-slate-700/60" title="발음 듣기">
+          <button class="speak-review-btn flex-shrink-0 p-2.5 rounded-xl bg-orange-50 hover:bg-orange-500 text-orange-600 hover:text-white transition active:scale-95 border border-orange-200" title="발음 듣기">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
             </svg>
           </button>
         `;
@@ -846,7 +820,6 @@
     /* =========================================================
        5. Event Handlers & Navigation
        ========================================================= */
-    // Option clicks
     optionButtons.forEach(btn => {
       btn.addEventListener('click', () => {
         const optIndex = parseInt(btn.getAttribute('data-opt-idx'), 10);
@@ -854,38 +827,32 @@
       });
     });
 
-    // Replay voice button
     replayVoiceBtn.addEventListener('click', () => {
       if (quizQuestions[currentQIndex]) {
         speakWord(quizQuestions[currentQIndex].targetWord.eng);
       }
     });
 
-    // Early stop
     earlyStopBtn.addEventListener('click', () => {
       finishQuiz();
     });
 
-    // Start with sample
     useSampleBtn.addEventListener('click', () => {
       currentWordBank = [...SAMPLE_WORDS];
       startQuiz(currentWordBank);
     });
 
-    // Start with loaded custom file
     startLoadedBtn.addEventListener('click', () => {
       if (currentWordBank.length >= 4) {
         startQuiz(currentWordBank);
       }
     });
 
-    // Retry only incorrect words
     retryWrongOnlyBtn.addEventListener('click', () => {
       if (wrongWords.length === 0) return;
       const missedWordObjects = wrongWords.map(w => w.target);
 
       if (missedWordObjects.length < 4) {
-        // If missed words are fewer than 4, borrow distractors from main wordbank so we can still form 4 multiple choices!
         const needed = 4 - missedWordObjects.length;
         const extraDistractors = currentWordBank.filter(w => !missedWordObjects.some(m => m.eng === w.eng)).slice(0, needed);
         startQuiz([...missedWordObjects, ...extraDistractors]);
@@ -894,12 +861,10 @@
       }
     });
 
-    // Restart full quiz with current wordbank
     restartAllBtn.addEventListener('click', () => {
       startQuiz(currentWordBank);
     });
 
-    // Go back to upload screen
     goToUploadBtn.addEventListener('click', () => {
       screenResult.classList.add('hidden');
       screenQuiz.classList.add('hidden');
@@ -908,7 +873,6 @@
 
     // Keyboard controls
     window.addEventListener('keydown', (e) => {
-      // Replay audio: Space or '0'
       if (e.code === 'Space' || e.key === '0') {
         if (!screenQuiz.classList.contains('hidden') && !isAnsweringLocked) {
           e.preventDefault();
@@ -918,7 +882,6 @@
         }
       }
 
-      // Keys 1, 2, 3, 4
       if (['1', '2', '3', '4'].includes(e.key)) {
         if (!screenQuiz.classList.contains('hidden') && !isAnsweringLocked) {
           const idx = parseInt(e.key, 10) - 1;
@@ -929,14 +892,13 @@
       }
     });
 
-    // Settings panel toggle
     toggleSettingsBtn.addEventListener('click', () => {
       settingsPanel.classList.toggle('hidden');
     });
 
     rateRange.addEventListener('input', (e) => {
       speechRate = parseFloat(e.target.value);
-      rateLabel.textContent = `${speechRate.toFixed(1)}x`;
+      rateLabel.textContent = `${speechRate.toFixed(2)}x`;
     });
 
     delayRange.addEventListener('input', (e) => {
@@ -944,7 +906,6 @@
       delayLabel.textContent = `${e.target.value}초`;
     });
 
-    // Toast helper
     let toastTimeout = null;
     function showToast(message, type = 'info') {
       clearTimeout(toastTimeout);
@@ -955,7 +916,7 @@
       } else if (type === 'warn') {
         toastIcon.innerHTML = '<span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>';
       } else {
-        toastIcon.innerHTML = '<span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>';
+        toastIcon.innerHTML = '<span class="w-2.5 h-2.5 rounded-full bg-orange-400"></span>';
       }
 
       toast.classList.remove('translate-y-20', 'opacity-0');
@@ -967,7 +928,6 @@
       }, 3200);
     }
 
-    // Initialize TTS on page load
     window.addEventListener('DOMContentLoaded', () => {
       initSpeechEngine();
     });
